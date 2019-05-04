@@ -12,20 +12,20 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class InstructorsController : Controller
+    public class StudentsController : Controller
     {
         private DB54Entities db = new DB54Entities();
 
-        // GET: Instructors
+        // GET: Students
         public ActionResult Index()
         {
-            return View(db.Instructors.ToList());
+            return View(db.Students.ToList());
         }
         public ActionResult expRep()
         {
             ReportDocument rd = new ReportDocument();
-            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "CrystalReport1.rpt"));
-            rd.SetDataSource(db.Instructors.ToList());
+            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "CrystalReport2.rpt"));
+            rd.SetDataSource(db.Students.ToList());
             Response.Buffer = false;
             Response.ClearContent();
             Response.ClearHeaders();
@@ -41,98 +41,97 @@ namespace IMS.Controllers
             }
         }
 
-
-        // GET: Instructors/Details/5
+        // GET: Students/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instructor instructor = db.Instructors.Find(id);
-            if (instructor == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(instructor);
+            return View(student);
         }
 
-        // GET: Instructors/Create
+        // GET: Students/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Instructors/Create
+        // POST: Students/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InstructorID,FirstName,LastName,Contact,Email,Address,DateOfBirth,Gender,Designation,Salary,DepartmentID,pass_word")] Instructor instructor)
+        public ActionResult Create([Bind(Include = "RegNo,FirstName,LastName,Contact,Email,Address,DateOfBirth,Gender,pass_word")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Instructors.Add(instructor);
+                db.Students.Add(student);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(instructor);
+            return View(student);
         }
 
-        // GET: Instructors/Edit/5
+        // GET: Students/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instructor instructor = db.Instructors.Find(id);
-            if (instructor == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(instructor);
+            return View(student);
         }
 
-        // POST: Instructors/Edit/5
+        // POST: Students/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InstructorID,FirstName,LastName,Contact,Email,Address,DateOfBirth,Gender,Designation,Salary,DepartmentID,pass_word")] Instructor instructor)
+        public ActionResult Edit([Bind(Include = "RegNo,FirstName,LastName,Contact,Email,Address,DateOfBirth,Gender,pass_word")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(instructor).State = EntityState.Modified;
+                db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(instructor);
+            return View(student);
         }
 
-        // GET: Instructors/Delete/5
+        // GET: Students/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Instructor instructor = db.Instructors.Find(id);
-            if (instructor == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(instructor);
+            return View(student);
         }
 
-        // POST: Instructors/Delete/5
+        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Instructor instructor = db.Instructors.Find(id);
-            db.Instructors.Remove(instructor);
+            Student student = db.Students.Find(id);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
